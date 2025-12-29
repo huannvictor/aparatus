@@ -1,9 +1,20 @@
-import { Button } from "@/components/ui/button"
+import Header from "@/components/header"
+import Image from "next/image"
+
+import banner from "@/public/banner.png"
 
 export default function Home() {
 	return (
-		<div className="flex h-dvh items-center justify-center">
-			<Button className="cursor-pointer">Click me</Button>
+		<div>
+			<Header />
+			<div className="px-4">
+				<Image 
+					src={banner}
+					alt="Agende nos melhores com a Aparatus"
+					sizes="100vw"
+					className="h-auto w-full"
+				/>
+			</div>
 		</div>
 	)
 }
