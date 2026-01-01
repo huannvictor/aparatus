@@ -1,0 +1,31 @@
+export const PageContainer = ({ children }: { children: React.ReactNode }) => {
+	return <div className="space-y-6 p-5">{children}</div>
+}
+
+export const PageSectionTitle = ({
+	children,
+}: {
+	children: React.ReactNode
+}) => {
+	return <h3 className="font-bold text-xs uppercase">{children}</h3>
+}
+
+export const PageSectionContent = ({
+	children,
+}: {
+	children: React.ReactNode
+}) => {
+	return <div className="space-y-3">{children}</div>
+}
+
+export const PageSectionScroller = ({
+	children,
+}: {
+	children: React.ReactNode
+}) => {
+	return (
+		<div className="custom-scrollbar mt-4 flex snap-x gap-4 overflow-x-auto">
+			{children}
+		</div>
+	)
+}

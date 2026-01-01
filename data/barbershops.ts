@@ -10,3 +10,13 @@ export const getBarbershops = async () => {
 		return []
 	}
 }
+
+export const getPopularBarbershops = async () => {
+	const popularBarbershops = await prisma.barbershop.findMany({
+		orderBy: {
+			name: "desc",
+		},
+	})
+
+	return popularBarbershops
+}
