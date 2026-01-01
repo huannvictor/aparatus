@@ -65,8 +65,8 @@
   --spacing: 0.25rem;
 
   --sb-track-color: transparent;
-  --sb-thumb-color: oklch(0.869 0.022 259.8);
-  --sb-thumb-hover-color: oklch(0.704 0.04 256.8);
+  --sb-thumb-color: oklch(0.433 0.0745 149.7347);
+  --sb-thumb-hover-color: oklch(33.493% 0.02872 150.699);
   --sb-size: 8px;
 }
 
@@ -127,8 +127,8 @@
     0 0.25rem 0.5rem 0 hsl(0 0 0 / 0.4), 0 8px 10px -1px hsl(0 0 0 / 0.4);
   --shadow-2xl: 0 0.25rem 0.5rem 0 hsl(0 0 0 / 1);
 
-  --sb-thumb-color: oklch(0.446 0.043 257.3);       /* Slate 600 */
-  --sb-thumb-hover-color: oklch(0.554 0.046 257.4); /* Slate 500 */
+  --sb-thumb-color: oklch(0.433 0.0745 149.7347);       /* Slate 600 */
+  --sb-thumb-hover-color: oklch(37.786% 0.03293 151.405); /* Slate 500 */
 }
 
 @theme inline {
@@ -203,7 +203,7 @@
 @layer utilities {
   .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+    scrollbar-color: var(--s-thumb-colobr) var(--sb-track-color);
   }
 
   .custom-scrollbar::-webkit-scrollbar {
