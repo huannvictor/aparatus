@@ -2,6 +2,7 @@ import Image from "next/image"
 import BarbershopItem from "@/components/barbershop-item"
 import BookingItem from "@/components/booking-item"
 import Header from "@/components/header"
+import QuickSearch from "@/components/quick-search"
 import {
 	PageContainer,
 	PageSectionContent,
@@ -19,6 +20,8 @@ export default async function Home() {
 		<div>
 			<Header />
 			<PageContainer>
+				<QuickSearch />
+
 				<Image
 					src={banner}
 					alt="Agende nos melhores com a Aparatus"

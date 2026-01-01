@@ -24,7 +24,7 @@ export const PageSectionScroller = ({
 	children: React.ReactNode
 }) => {
 	return (
-		<div className="custom-scrollbar mt-4 flex snap-x gap-4 overflow-x-auto">
+		<div className="custom-scrollbar mt-4 flex snap-x gap-4 overflow-x-auto pb-2">
 			{children}
 		</div>
 	)
