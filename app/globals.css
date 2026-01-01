@@ -67,7 +67,7 @@
   --sb-track-color: transparent;
   --sb-thumb-color: oklch(0.433 0.0745 149.7347);
   --sb-thumb-hover-color: oklch(33.493% 0.02872 150.699);
-  --sb-size: 8px;
+  --sb-size: 6px;
 }
 
 .dark {
@@ -203,7 +203,7 @@
 @layer utilities {
   .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: var(--s-thumb-colobr) var(--sb-track-color);
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
   }
 
   .custom-scrollbar::-webkit-scrollbar {
