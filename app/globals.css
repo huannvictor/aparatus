@@ -9,6 +9,7 @@
   --background: oklch(0.994 0 0);
   --foreground: oklch(0.2178 0 0);
   --card: oklch(1 0 0);
+  --card-background: oklch(0.9851 0 0);
   --card-foreground: oklch(0.2178 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2178 0 0);
@@ -22,7 +23,7 @@
   --accent-foreground: oklch(0.2178 0 0);
   --destructive: oklch(0.53 0.1547 24.056);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.8699 0 0);
+  --border:oklch(0.9595 0 0);
   --input: oklch(1 0 0);
   --ring: oklch(0.433 0.0745 149.7347);
   --chart-1: oklch(0.433 0.0745 149.7347);
@@ -74,6 +75,7 @@
   --background: oklch(0.2178 0 0);
   --foreground: oklch(0.994 0 0);
   --card: oklch(0.2686 0 0);
+  --card-background: oklch(0.2618 0 0);
   --card-foreground: oklch(0.994 0 0);
   --popover: oklch(0.2686 0 0);
   --popover-foreground: oklch(0.994 0 0);
@@ -135,6 +137,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-card-background: var(--card-background);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
@@ -194,6 +197,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    @apply overflow-x-hidden;
+    max-width: 100vw;
   }
   body {
     @apply bg-background text-foreground;
