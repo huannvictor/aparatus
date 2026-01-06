@@ -1,21 +1,11 @@
 "use client"
 
-import {
-	CalendarDays,
-	Home,
-	LogIn,
-	LogOut,
-	UserIcon,
-} from "lucide-react"
+import { CalendarDays, Home, LogIn, LogOut, UserIcon } from "lucide-react"
 import Link from "next/link"
+import Divider from "./divider"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
-import {
-	Sheet,
-	SheetContent,
-	SheetHeader,
-	SheetTitle,
-} from "./ui/sheet"
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet"
 
 interface MenuProps {
 	open: boolean
@@ -33,16 +23,18 @@ const categories = [
 ]
 
 const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
+	console.log(isLoggedIn)
+	console.info([open, onOpenChange])
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
 			<SheetContent side="right" className="p-0">
 				<div className="flex h-full flex-col py-5">
-					<SheetHeader className="px-5 text-left">
+					<SheetHeader className="flex px-5 text-left">
 						<SheetTitle>Menu</SheetTitle>
 					</SheetHeader>
 
 					<div className="mt-6 flex flex-col gap-6">
-						<div className="border-t border-border" />
+						<Divider />
 
 						{isLoggedIn ? (
 							<div className="flex items-center gap-3 px-5">
@@ -55,7 +47,7 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 								</Avatar>
 								<div className="flex flex-col">
 									<p className="font-semibold">Pedro Lucas</p>
-									<p className="text-sm text-muted-foreground">
+									<p className="text-muted-foreground text-sm">
 										pedrolucas@gmail.com
 									</p>
 								</div>
@@ -76,13 +68,13 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 							</div>
 						)}
 
-						<div className="border-t border-border" />
+						<Divider />
 
 						<div className="flex flex-col gap-2 px-5">
 							<Button
 								asChild
 								variant="ghost"
-								className="justify-start gap-3 rounded-full text-base font-bold"
+								className="justify-start gap-3 rounded-full font-bold text-base"
 								onClick={() => onOpenChange(false)}
 							>
 								<Link href="/">
@@ -94,7 +86,7 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 								<Button
 									asChild
 									variant="ghost"
-									className="justify-start gap-3 rounded-full text-base font-bold"
+									className="justify-start gap-3 rounded-full font-bold text-base"
 									onClick={() => onOpenChange(false)}
 								>
 									<Link href="/bookings">
@@ -105,7 +97,7 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 							)}
 						</div>
 
-						<div className="border-t border-border" />
+						<Divider />
 
 						<div className="flex flex-col gap-2 px-5">
 							{categories.map((category) => (
@@ -113,7 +105,7 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 									key={category}
 									asChild
 									variant="ghost"
-									className="justify-start rounded-full text-base font-normal text-muted-foreground"
+									className="justify-start rounded-full font-normal text-base text-muted-foreground"
 									onClick={() => onOpenChange(false)}
 								>
 									<Link href={`/barbershops?search=${category.toLowerCase()}`}>
@@ -123,13 +115,13 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 							))}
 						</div>
 
-						<div className="border-t border-border" />
+						<Divider />
 
 						{isLoggedIn && (
 							<div className="px-5">
 								<Button
 									variant="ghost"
-									className="w-full justify-start gap-3 rounded-full text-base font-bold"
+									className="w-full justify-start gap-3 rounded-full font-bold text-base"
 								>
 									<LogOut className="size-5" />
 									Sair da conta
