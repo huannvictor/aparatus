@@ -25,7 +25,7 @@ Tecnologias utilizadas:
 - NUNCA crie componentes do zero antes de verificar se há algum do shadcn/ui disponível que atinja seu objetivo.
 - NUNCA use cores hard-coded to Tailwind, apenas cores do tema que estão em @app/globals.css.
 - SEMPRE use os componentes que estão em @components/ui/page.tsx.
-- SEMPRE use o MCP do Context7 para buscar documentações, sites e APIs.
+- SEMPRE use o Context7 para buscar documentações, sites e APIs.
 - SEMPRE use o componente Image do Next.js para renderizar imagens.
 - NUNCA chame o Prisma de componentes. SEMPRE crie uma função em @data, assim como é feito em @app/page.tsx.
 - SEMPRE use rem para medidas e nunca px.

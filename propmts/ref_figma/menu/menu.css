@@ -1,0 +1,145 @@
+/* General styles */
+body {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	color: #000000;
+}
+
+.menu {
+	position: relative;
+	width: 390px;
+	height: 849px;
+	background:
+		linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), #ffffff;
+	border-radius: 20px;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 24px 0;
+	gap: 24px;
+	position: absolute;
+	width: 370px;
+	height: 849px;
+	left: 20px;
+	top: 0;
+	background: #ffffff;
+}
+
+/* Header */
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 20px;
+	width: 100%;
+	height: 40px;
+}
+
+.header-title {
+	font-family: "Nunito", sans-serif;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 25px;
+}
+
+.icon-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+	gap: 10px;
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+}
+
+.icon-button .icon {
+	width: 20px;
+	height: 20px;
+	border: 1.2px solid #000000;
+}
+
+/* Divider */
+.divider {
+	width: 100%;
+	height: 1px;
+	background-color: #f1f1f1;
+}
+
+/* User section */
+.user {
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	width: 100%;
+	height: 48px;
+	gap: 12px;
+}
+
+.user-avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background-color: #d9d9d9;
+	/* background-image: url(.jpg); */ /* This was in the original file, but the path is invalid */
+}
+
+.user-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.user-name {
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 140%;
+}
+
+.user-email {
+	font-size: 12px;
+	line-height: 140%;
+	color: #656565;
+}
+
+/* Buttons */
+.buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+	padding: 0;
+}
+
+.menu-button {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 12px 20px;
+	gap: 12px;
+	width: 100%;
+	height: 40px;
+	border-radius: 82px;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 18px;
+	color: #000000;
+}
+
+.menu-button .icon {
+	width: 16px;
+	height: 16px;
+	border: 1.33333px solid #000000;
+}
+
+/* Logout button */
+.logout-button {
+	color: #656565;
+}
+
+.logout-button .icon {
+	border-color: #656565;
+}
