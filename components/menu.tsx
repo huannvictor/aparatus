@@ -9,16 +9,19 @@ import {
 	UserIcon,
 } from "lucide-react"
 import Link from "next/link"
+import { toast } from "sonner"
+import { authClient } from "@/lib/auth-client"
 import Divider from "./divider"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
-import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
-
-interface MenuProps {
-	open: boolean
-	onOpenChange: (open: boolean) => void
-	isLoggedIn?: boolean
-}
+import {
+	Sheet,
+	SheetContent,
+	SheetFooter,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "./ui/sheet"
 
 const categories = [
 	"Cabelo",
@@ -26,18 +29,42 @@ const categories = [
 	"Acabamento",
 	"Sobrancelha",
 	"Massagem",
-	"Hidratação"
+	"Hidratação",
 ]
 
-const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
+const Menu = () => {
+	const { data: session } = authClient.useSession()
+
+	const handleLogin = async () => {
+		const { error } = await authClient.signIn.social({
+			provider: "google",
+		})
+
+		if (error) {
+			toast.error(error.message)
+			return
+		}
+	}
+
+	const handleLogout = async () => {
+		const { error } = await authClient.signOut()
+
+		if (error) {
+			toast.error(error.message)
+			return
+		}
+	}
+
+	const isLoggedIn = !!session?.user
+
 	return (
-		<Sheet open={open} onOpenChange={onOpenChange}>
+		<Sheet>
 			<SheetTrigger asChild>
-				<Button variant='outline' size='icon'>
+				<Button variant="outline" size="icon">
 					<MenuIcon />
-				</Button>	
+				</Button>
 			</SheetTrigger>
-			<SheetContent side='left' className="p-0">
+			<SheetContent side="left" className="p-0">
 				<SheetHeader className="border-border border-b border-solid px-5 py-6 text-left">
 					<SheetTitle>Menu</SheetTitle>
 				</SheetHeader>
@@ -47,15 +74,15 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 						{isLoggedIn ? (
 							<div className="flex items-center gap-3">
 								<Avatar>
-									<AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop" />
+									<AvatarImage src={session.user.image?.toString() ?? ""} />
 									<AvatarFallback>
-										{"UN".toUpperCase()}
+										{session.user.name.charAt(0).toUpperCase()}
 									</AvatarFallback>
 								</Avatar>
 								<div>
-									<h2 className="font-bold">Pedro Lucas</h2>
+									<h2 className="font-bold">{session.user.name}</h2>
 									<p className="text-muted-foreground text-sm">
-										pedrolucas@gmail.com
+										{session.user.email}
 									</p>
 								</div>
 							</div>
@@ -68,6 +95,7 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 								<Button
 									className="w-full justify-start gap-2"
 									variant="secondary"
+									onClick={handleLogin}
 								>
 									<LogInIcon className="size-4" />
 									Fazer Login
@@ -113,7 +141,6 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 								asChild
 								variant="ghost"
 								className="w-full justify-start rounded-full font-normal"
-								onClick={() => onOpenChange(false)}
 							>
 								<Link href={`/barbershops?search=${category.toLowerCase()}`}>
 									{category}
@@ -130,6 +157,7 @@ const Menu = ({ open, onOpenChange, isLoggedIn = false }: MenuProps) => {
 						<Button
 							variant="ghost"
 							className="w-full justify-start gap-3 text-muted-foreground text-sm"
+							onClick={handleLogout}
 						>
 							<LogOutIcon className="size-5" />
 							Sair da conta
