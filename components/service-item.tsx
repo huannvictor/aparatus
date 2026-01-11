@@ -2,8 +2,12 @@
 
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
+import { Loader2 } from "lucide-react"
 import Image from "next/image"
+import { useAction } from "next-safe-action/hooks"
 import { useMemo, useState } from "react"
+import { toast } from "sonner"
+import { createBooking } from "@/actions/create-booking"
 import type { Barbershop, BarbershopService } from "@/generated/prisma/client"
 import { Button } from "./ui/button"
 import { Calendar } from "./ui/calendar"
@@ -23,16 +27,21 @@ interface ServiceItemProps {
 }
 
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
-	const [date, setDate] = useState<Date | undefined>(undefined)
-	const [time, setTime] = useState<string | undefined>(undefined)
+	const [sheetIsOpen, setSheetIsOpen] = useState(false)
+	const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+	const [selectedTime, setSelectedTime] = useState<string | undefined>(
+		undefined,
+	)
+	const { executeAsync: executeCreateBooking, isPending: isCreatingBooking } =
+		useAction(createBooking)
 
 	const handleDateSelect = (date: Date | undefined) => {
-		setDate(date)
-		setTime(undefined)
+		setSelectedDate(date)
+		setSelectedTime(undefined)
 	}
 
 	const handleTimeSelect = (time: string) => {
-		setTime(time)
+		setSelectedTime(time)
 	}
 
 	const timeList = useMemo(() => {
@@ -55,8 +64,32 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 		currency: "BRL",
 	})
 
+	const handleConfirmedBooking = async () => {
+		if (!selectedDate || !selectedTime) {
+			return []
+		}
+		const [hour, minute] = selectedTime.split(":")
+		const date = new Date(selectedDate)
+		date.setHours(Number(hour), Number(minute))
+		const result = await executeCreateBooking({
+			date,
+			serviceId: service.id,
+		})
+		if (result.validationErrors) {
+			return toast.error(result.validationErrors._errors?.[0])
+		}
+		if (result.serverError) {
+			return toast.error("Erro ao criar agendamento. Tente novamente.")
+		}
+
+		toast.success("agendamento criado com sucesso!")
+		setSheetIsOpen(false)
+		setSelectedDate(undefined)
+		setSelectedTime(undefined)
+	}
+
 	return (
-		<Sheet>
+		<Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
 			<div className="flex w-full items-center gap-3 rounded-2xl border bg-card-background p-3">
 				<div className="relative size-27.5 shrink-0">
 					<Image
@@ -84,7 +117,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 				</div>
 			</div>
 
-			<SheetContent className="overflow-y-auto px-0 py-0">
+			<SheetContent className="custom-scrollbar w-[65%] overflow-y-auto px-0 py-0">
 				<SheetHeader className="px-5 py-6">
 					<SheetTitle>Fazer Reserva</SheetTitle>
 				</SheetHeader>
@@ -92,7 +125,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 				<div className="border-b py-5">
 					<Calendar
 						mode="single"
-						selected={date}
+						selected={selectedDate}
 						onSelect={handleDateSelect}
 						locale={ptBR}
 						disabled={{ before: new Date() }}
@@ -102,12 +135,12 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 					/>
 				</div>
 
-				{date && (
+				{selectedDate && (
 					<div className="custom-scrollbar flex gap-3 overflow-x-auto border-b px-5 py-6">
 						{timeList.map((timeOption) => (
 							<Button
 								key={timeOption}
-								variant={time === timeOption ? "default" : "outline"}
+								variant={selectedTime === timeOption ? "default" : "outline"}
 								className="rounded-full"
 								onClick={() => handleTimeSelect(timeOption)}
 							>
@@ -118,7 +151,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 				)}
 
 				<div className="p-5">
-					{date && time && (
+					{selectedDate && selectedTime && (
 						<Card>
 							<CardContent className="flex flex-col gap-3 p-3">
 								<div className="flex items-center justify-between">
@@ -129,7 +162,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 								<div className="flex items-center justify-between text-sm">
 									<h3 className="text-muted-foreground">Data</h3>
 									<p>
-										{format(date, "dd 'de' MMMM", {
+										{format(selectedDate, "dd 'de' MMMM", {
 											locale: ptBR,
 										})}
 									</p>
@@ -137,7 +170,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
 								<div className="flex items-center justify-between text-sm">
 									<h3 className="text-muted-foreground">Horário</h3>
-									<p>{time}</p>
+									<p>{selectedTime}</p>
 								</div>
 
 								<div className="flex items-center justify-between text-sm">
@@ -150,8 +183,16 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 				</div>
 
 				<SheetFooter className="px-5">
-					<Button disabled={!date || !time} className="w-full">
-						Confirmar
+					<Button
+						disabled={!selectedDate || !selectedTime || isCreatingBooking}
+						className="w-full"
+						onClick={handleConfirmedBooking}
+					>
+						{isCreatingBooking ? (
+							<Loader2 className="size-4 animate-spin" />
+						) : (
+							"Confirmar"
+						)}
 					</Button>
 				</SheetFooter>
 			</SheetContent>
