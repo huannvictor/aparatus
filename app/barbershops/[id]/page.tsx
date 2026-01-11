@@ -27,7 +27,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 
 	return (
 		<div>
-			<div className="relative h-[297px] w-full">
+			<div className="relative h-74.25 w-full">
 				<Image
 					src={barbershop.imageUrl}
 					alt={barbershop.name}
@@ -42,7 +42,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 				<PageContainer>
 					<PageSectionContent>
 						<div className="flex items-center gap-1.5">
-							<Avatar className="size-[30px] shrink-0">
+							<Avatar className="size-7.5 shrink-0">
 								<AvatarImage src={barbershop.imageUrl} alt={barbershop.name} />
 							</Avatar>
 							<h1 className="font-bold text-xl">{barbershop.name}</h1>
@@ -73,7 +73,11 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 						<PageSectionTitle>Serviços</PageSectionTitle>
 						<div className="space-y-3">
 							{barbershop.barbershopServices.map((service) => (
-								<ServiceItem key={service.id} service={service} />
+								<ServiceItem
+									key={service.id}
+									service={service}
+									barbershop={barbershop}
+								/>
 							))}
 						</div>
 					</PageSectionContent>
