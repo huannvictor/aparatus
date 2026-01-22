@@ -117,7 +117,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 				</div>
 			</div>
 
-			<SheetContent className="custom-scrollbar w-[65%] overflow-y-auto px-0 py-0">
+			<SheetContent className="custom-scrollbar overflow-y-auto px-0 py-0">
 				<SheetHeader className="px-5 py-6">
 					<SheetTitle>Fazer Reserva</SheetTitle>
 				</SheetHeader>
